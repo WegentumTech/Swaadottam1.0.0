@@ -13,7 +13,10 @@ import axios from 'axios';
 import {BACKEND_URL} from '../../helper/baseUrl';
 import {AuthKey} from '../../helper/baseUrl';
 import {AuthPassword} from '../../helper/baseUrl';
+import {useNavigation} from '@react-navigation/native';
+
 const VerifyOtp = () => {
+  const navigation = useNavigation();
   const [enteredOTP, setEnteredOTP] = useState('');
   const [pin1, setPin1] = useState('');
   const [pin2, setPin2] = useState('');
@@ -25,22 +28,25 @@ const VerifyOtp = () => {
   const pin3Ref = useRef(null);
   const pin4Ref = useRef(null);
 
+  useEffect(() => {
+    const OTP = route.params.ReveviedOtp;
+    setEnteredOTP(OTP);
+  }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   const route = useRoute();
 
   const UserNumber = route.params.Number;
-  const OTP = route.params.ReveviedOtp;
 
-  console.log(UserNumber, OTP);
+  // console.log(UserNumber, OTP);
 
   const handleResendOtp = () => {
     console.log('send otp again');
   };
 
   const handleVerifyCode = () => {
-    setEnteredOTP(OTP);
     setIsLoading(true);
 
     if (

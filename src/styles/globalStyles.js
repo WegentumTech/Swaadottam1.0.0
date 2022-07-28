@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import React from 'react';
 
 const styles = StyleSheet.create({
   tinyLogo: {
@@ -24,11 +23,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom:5
+    marginBottom: 5,
   },
   paraHeaderBoldTextAligned: {
     textAlign: 'center',
-    color: 'black',
+    color: '#605D5D',
   },
   loginTopHeading: {
     color: 'black',
@@ -43,10 +42,9 @@ const styles = StyleSheet.create({
     width: '75%',
     borderColor: '#7D7D7D',
     borderRadius: 5,
-    fontWeight:"bold",
-    fontSize:18,
-    color:"black"
-    
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'black',
   },
   otpInputBox: {
     height: 40,
@@ -56,23 +54,22 @@ const styles = StyleSheet.create({
     width: 40,
     borderColor: '#7D7D7D',
     borderRadius: 5,
-    fontWeight:"bold",
-    fontSize:18,
-    color:"black",
-    textAlign:"center"
-    
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
   },
 
   inputBoxCountryCode: {
     fontSize: 20,
     color: 'black',
-    marginLeft:5,
-    fontWeight:"bold"
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
   countryFlagicon: {
     width: 30,
     height: 30,
-    marginLeft:8
+    marginLeft: 8,
   },
   countryCodeAndImageBox: {
     flexDirection: 'row',
@@ -82,7 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 13,
     marginBottom: 13,
     padding: 3,
-    width:"25%"
+    width: '25%',
+    paddingTop: 5,
   },
 
   button1: {
@@ -90,26 +88,24 @@ const styles = StyleSheet.create({
     padding: 10,
     color: 'black',
     fontWeight: 'bold',
-    borderRadius:8,
-    width:180,
-    textAlign:"center",
-    fontSize:18
+    borderRadius: 8,
+    width: 180,
+    textAlign: 'center',
+    fontSize: 18,
   },
 
-
-  resendOtpText:{
-    textAlign:'center',
-    marginTop:18,
-    color:"black"
+  resendOtpText: {
+    textAlign: 'center',
+    marginTop: 18,
+    color: 'black',
   },
-  resenButton:{
-    color:"#FF9933",
-    fontWeight:"bold"
+  resenButton: {
+    color: '#FF9933',
+    fontWeight: 'bold',
   },
-  errorMessage:{
-    color:"red",
-    alignSelf:"center"
-
+  errorMessage: {
+    color: 'red',
+    alignSelf: 'center',
   },
   inputError: {
     height: 40,
@@ -119,10 +115,17 @@ const styles = StyleSheet.create({
     width: '75%',
     borderColor: 'red',
     borderRadius: 5,
-    fontWeight:"bold",
-    fontSize:18,
-    color:"red"
-    
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'red',
   },
+  liveAddressFirst:{
+    fontWeight:"bold",
+    color:"black",
+    fontSize:15
+  },
+  liveAddressSecond:{
+    color:"#B2B2B2"
+  }
 });
 export default styles;

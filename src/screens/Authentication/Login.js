@@ -43,7 +43,7 @@ const Login = () => {
         )
         .then(acc => {
           setIsLoading(false);
-          //   console.log(acc.data);
+            console.log(acc.data);
           navigation.replace('VerifyOtp', {
             Number: mobileNumber.mobileNumber,
             ReveviedOtp: acc.data.otp,
@@ -74,11 +74,11 @@ const Login = () => {
         </View>
       </View>
 
-      <View style={{marginTop: 35, marginHorizontal: 20}}>
+      <View style={{marginTop: 30, marginHorizontal: 20}}>
         <Text style={styles.loginTopHeading}>Enter Mobile Number</Text>
       </View>
 
-      <View style={{flexDirection: 'row', marginHorizontal: 20}}>
+      <View style={{flexDirection: 'row', marginHorizontal: 20,marginTop:10}}>
         <View style={styles.countryCodeAndImageBox}>
           <Image
             style={styles.countryFlagicon}
@@ -94,7 +94,7 @@ const Login = () => {
           placeholderTextColor="#8c8989"
           maxLength={10}
           style={{
-            height: 40,
+            height: 45,
             margin: 12,
             borderWidth: 1,
             padding: 10,
