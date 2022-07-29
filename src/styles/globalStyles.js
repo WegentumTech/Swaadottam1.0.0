@@ -192,15 +192,51 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     top: -99,
-    left:38,
+    left: 38,
     backgroundColor: '#FE5656',
     borderRadius: 30,
     padding: 20,
   },
-  roundFoodScrollable:{
-    height:80,
-    width:80,
-    margin:5
+  roundFoodScrollable: {
+    height: 80,
+    width: 80,
+    margin: 5,
+  },
+  ScrollableProducts: {
+    width: 200,
+    height: 100,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  randomScrollableProductHead: {
+    fontSize: 20,
+    color: '#333333',
+  },
+
+  randomScrollableProductPara: {
+    color: '#707070',
+  },
+  SideButton: {
+    fontSize: 20,
+    color: '#74747A',
+    borderStyle: 'solid',
+    borderColor: '#C8C8C8',
+    borderWidth: 1,
+    textAlign: 'center',
+    borderRadius: 10,
+    padding: 5,
+  },
+  starterImages: {
+    flex: 1,
+    height: 120,
+    elevation: 10,
+  },
+  RecommendProducts:{
+    width:"100%",
+    height:150,
+    borderTopLeftRadius:20,
+    borderTopRightRadius:20,
   }
 });
 export default styles;
