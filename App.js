@@ -7,9 +7,9 @@ import { NativeBaseProvider, Box } from "native-base";
 const App = () => {
   return (
     <NavigationContainer>
-    <NativeBaseProvider>
+    
       <StackNavigation />
-    </NativeBaseProvider>
+   
     </NavigationContainer>
   );
 };

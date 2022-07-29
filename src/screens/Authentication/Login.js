@@ -89,6 +89,7 @@ const Login = () => {
         </View>
 
         <TextInput
+        autoFocus
           keyboardType="number-pad"
           placeholder="00000..."
           placeholderTextColor="#8c8989"

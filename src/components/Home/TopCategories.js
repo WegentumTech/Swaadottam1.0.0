@@ -1,9 +1,39 @@
 import {View, Text, Image, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../../styles/globalStyles';
+import axios from 'axios';
+import {AuthKey} from '../../helper/baseUrl';
+import {AuthPassword} from '../../helper/baseUrl';
+import {BACKEND_URL} from '../../helper/baseUrl';
+import {SIMPLE_URL} from '../../helper/baseUrl';
 
 const TopCategories = () => {
-  //  roundFood.png
+  const [datas, setDatas] = useState('');
+
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          BACKEND_URL + 'category',
+
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          setDatas(acc.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <View>
       <View style={{marginHorizontal: 10}}>
@@ -15,171 +45,29 @@ const TopCategories = () => {
         style={{marginTop: 10}}
         horizontal
         showsHorizontalScrollIndicator={false}>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
-        <View>
-          <Image
-            style={styles.roundFoodScrollable}
-            source={require('../../assets/roundFood.png')}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'black',
-              fontSize: 12,
-              fontWeight: 'bold',
-            }}>
-            Chiken Biryani
-          </Text>
-        </View>
+        {datas ? (
+          datas.map(hit => {
+            return (
+              <View key={hit.id}>
+                <Image
+                  style={styles.roundFoodScrollable}
+                  source={{uri: SIMPLE_URL + hit.category_image}}
+                />
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                  }}>
+                  {hit.category.slice(0,15)}...
+                </Text>
+              </View>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </ScrollView>
     </View>
   );

@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     margin: 5,
+    borderRadius:20
   },
   ScrollableProducts: {
     width: 200,
@@ -232,11 +233,67 @@ const styles = StyleSheet.create({
     height: 120,
     elevation: 10,
   },
-  RecommendProducts:{
-    width:"100%",
-    height:150,
-    borderTopLeftRadius:20,
-    borderTopRightRadius:20,
-  }
+  RecommendProducts: {
+    width: '100%',
+    height: 150,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  searchHeading: {
+    flex: 3,
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  inputBox: {
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: '90%',
+    borderColor: 'white',
+    borderRadius: 10,
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#4F4F4F',
+    backgroundColor: 'white',
+  },
+  tagStyle: {
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold',
+    margin: 5,
+    borderColor: 'white',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    padding: 7,
+    borderRadius: 15,
+  },
+  singleProductImage: {
+    width: '100%',
+    height: 300,
+  },
+  singleProductHead: {
+    backgroundColor: 'white',
+    elevation: 10,
+    padding: 10,
+    marginHorizontal: 10,
+    borderRadius: 20,
+    marginRight: 150,
+    fontSize: 20,
+    top: -20,
+    left: 15,
+    color: '#4A4A4A',
+    fontWeight: 'bold',
+  },
+  AddToCart: {
+    backgroundColor: '#F8774A',
+    padding: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius:20,
+    width:120,
+    textAlign:"center"
+  },
 });
 export default styles;

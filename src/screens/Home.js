@@ -16,12 +16,16 @@ const Home = () => {
       <TopHeader />
       <SearchBar />
       <OffersShow />
-      <View style={styles.divider}></View>
-      <ExclusiveOffers />
+      <View style={{marginVertical:10}}></View> 
+      {/* <ExclusiveOffers /> */}
       <View style={styles.divider}></View>
       <TopCategories />
+      <View style={styles.divider}></View>
+      {/* <View style={{marginVertical:5}}></View> */}
       <ScrollableProducts />
+      <View style={{marginVertical:10}}></View>
       <Starters />
+      <View style={{marginVertical:10}}></View>
       <RecommendedProducts />
     </ScrollView>
   );
