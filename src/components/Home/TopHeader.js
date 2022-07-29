@@ -1,19 +1,26 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from '../../styles/globalStyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TopHeader = () => {
   return (
     <View style={{flexDirection: 'row', marginHorizontal: 10, marginTop: 10}}>
       <View style={{flex: 1}}>
-        <Text>icon</Text>
+        <Ionicons name="location" size={35} color="#FCA785" />
       </View>
       <View style={{flex: 8}}>
         <Text style={styles.liveAddressFirst}>Jahumandi Rathyatra</Text>
         <Text style={styles.liveAddressSecond}>Varanasi</Text>
       </View>
-      <View style={{flex: 1}}>
-        <Text style={{alignSelf: 'flex-end'}}>menu</Text>
+      <View style={{flex: 1.3}}>
+        {/* <Text style={{alignSelf: 'flex-end'}}>menu</Text> */}
+        <TouchableOpacity>
+          <Image
+            style={styles.countryFlagicon}
+            source={require('../../assets/menu.png')}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

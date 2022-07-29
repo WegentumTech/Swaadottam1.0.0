@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
     height: '100%',
+    alignSelf: 'flex-end',
   },
   mainHeaderBoldText: {
     textAlign: 'center',
@@ -119,13 +120,87 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'red',
   },
-  liveAddressFirst:{
-    fontWeight:"bold",
-    color:"black",
-    fontSize:15
+  liveAddressFirst: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 15,
   },
-  liveAddressSecond:{
-    color:"#B2B2B2"
+  liveAddressSecond: {
+    color: '#B2B2B2',
+  },
+  searchInputBox: {
+    marginLeft: 10,
+    color: '#4F4F4F',
+    fontWeight: 'bold',
+  },
+
+  searchBarHomeScreenBox: {
+    flexDirection: 'row',
+    marginHorizontal: 8,
+    marginTop: 15,
+    backgroundColor: '#F3F3F3',
+    padding: 10,
+    borderRadius: 10,
+  },
+  mainHeader: {
+    fontWeight: 'bold',
+    color: '#3B3D52',
+    fontSize: 22,
+  },
+  mainPara: {
+    fontSize: 15,
+    color: '#74747A',
+  },
+
+  homeBannerOne: {
+    width: '100%',
+    height: 175,
+    marginTop: 10,
+    borderRadius: 10,
+  },
+  homeBannerTwo: {
+    width: '95%',
+    height: 160,
+    marginTop: 10,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  homeBannerThree: {
+    width: '100%',
+    height: 160,
+    marginTop: 10,
+    borderRadius: 20,
+    // marginLeft:10,
+  },
+  divider: {
+    padding: 2.8,
+    backgroundColor: '#F2F3F5',
+    marginVertical: 20,
+    marginHorizontal: 15,
+    borderRadius: 5,
+  },
+  ExclusiveOffersBox: {
+    backgroundColor: '#C80019',
+    padding: 28,
+    width: '30%',
+    borderRadius: 15,
+    height: 60,
+    marginTop: 30,
+  },
+  ExclusiveOffersUpper: {
+    position: 'relative',
+    width: 50,
+    height: 50,
+    top: -99,
+    left:38,
+    backgroundColor: '#FE5656',
+    borderRadius: 30,
+    padding: 20,
+  },
+  roundFoodScrollable:{
+    height:80,
+    width:80,
+    margin:5
   }
 });
 export default styles;
