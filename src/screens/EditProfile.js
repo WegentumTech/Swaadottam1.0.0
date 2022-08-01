@@ -38,6 +38,7 @@ const EditProfile = () => {
 </TouchableOpacity>
       </View>
 
+
       <View style={{marginHorizontal: 30, marginTop: 20}}>
         <View>
           <TextInput style={styles.billingInput} />
