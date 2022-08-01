@@ -201,10 +201,10 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     margin: 5,
-    borderRadius:20
+    borderRadius: 20,
   },
   ScrollableProducts: {
-    width: 200,
+    width: 180,
     height: 100,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -280,20 +280,66 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 20,
     marginRight: 150,
-    fontSize: 20,
-    top: -20,
+   
+    top: -30,
     left: 15,
-    color: '#4A4A4A',
-    fontWeight: 'bold',
+    
   },
   AddToCart: {
+    backgroundColor: '#F8774A',
+    padding: 12,
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius: 20,
+    width: 120,
+    textAlign: 'center',
+  },
+  PressBack: {
+    backgroundColor: '#F8774A',
+    borderRadius: 10,
+    padding: 10,
+    marginRight: 340,
+    marginTop: 10,
+  },
+  MainPageHead: {
+    color: '#0A191E',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  cartProductImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
+    flex: 1,
+  },
+  billingInput: {
+    borderColor: 'black',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    marginTop: 15,
+    color: 'black',
+  },
+  button2: {
     backgroundColor: '#F8774A',
     padding: 10,
     color: 'white',
     fontWeight: 'bold',
-    borderRadius:20,
-    width:120,
-    textAlign:"center"
+    borderRadius: 25,
+    width: 180,
+    textAlign: 'center',
+    fontSize: 18,
   },
+  categoryItemImage:{
+    width:"100%",
+    height:150,
+    opacity:0.7,
+    backgroundColor:"black",
+    elevation:10,
+    shadowColor:"black",
+    shadowOffset:{height:10,width:10},
+    shadowOpacity:5,
+    
+  }
 });
 export default styles;
