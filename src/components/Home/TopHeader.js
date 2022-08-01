@@ -2,8 +2,11 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from '../../styles/globalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const TopHeader = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={{flexDirection: 'row', marginHorizontal: 10, marginTop: 10}}>
       <View style={{flex: 1}}>
@@ -15,7 +18,7 @@ const TopHeader = () => {
       </View>
       <View style={{flex: 1.3}}>
         {/* <Text style={{alignSelf: 'flex-end'}}>menu</Text> */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
           <Image
             style={styles.countryFlagicon}
             source={require('../../assets/menu.png')}

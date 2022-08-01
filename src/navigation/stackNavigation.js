@@ -13,6 +13,8 @@ import SingleMealScreen from '../screens/DynamicScreen/SingleMealScreen';
 import Cart from '../screens/Cart';
 import BillingAndPayment from '../components/BillingAndPayment';
 import CategotyItems from '../screens/DynamicScreen/CategotyItems';
+import Profile from '../screens/Profile';
+import EditProfile from "../screens/EditProfile";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,8 @@ function StackNavigation() {
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="BillingAndPayment" component={BillingAndPayment} />
       <Stack.Screen name="CategotyItems" component={CategotyItems} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   );
 }

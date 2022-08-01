@@ -280,10 +280,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 20,
     marginRight: 150,
-   
+
     top: -30,
     left: 15,
-    
   },
   AddToCart: {
     backgroundColor: '#F8774A',
@@ -330,16 +329,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
-  categoryItemImage:{
-    width:"100%",
-    height:150,
-    opacity:0.7,
-    backgroundColor:"black",
-    elevation:10,
-    shadowColor:"black",
-    shadowOffset:{height:10,width:10},
-    shadowOpacity:5,
-    
-  }
+  categoryItemImage: {
+    width: '100%',
+    height: 150,
+    opacity: 0.7,
+    backgroundColor: 'black',
+    elevation: 10,
+    shadowColor: 'black',
+    shadowOffset: {height: 10, width: 10},
+    shadowOpacity: 5,
+  },
+  profileModules: {
+    backgroundColor: '#F5F5F8',
+    marginHorizontal: 20,
+    color: 'black',
+    padding: 20,
+    borderRadius: 20,
+    fontWeight: 'bold',
+    elevation: 2,
+    marginTop:15,
+    flexDirection:"row"
+  },
 });
 export default styles;
