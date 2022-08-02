@@ -20,7 +20,7 @@ const PressBackWithTitle = props => {
             marginLeft: 10,
             marginTop: 15,
           }}>
-          <AntDesign name="arrowleft" size={18} color="black" />
+          <AntDesign name="arrowleft" size={18} color="white" />
         </View>
       </TouchableOpacity>
       <Text

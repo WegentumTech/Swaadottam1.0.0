@@ -358,5 +358,18 @@ const styles = StyleSheet.create({
     marginTop:35,
     right:15
   },
+  inputReview: {
+    // height: 50,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: '90%',
+    borderColor: 'white',
+    borderRadius: 10,
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#4F4F4F',
+    backgroundColor: 'white',
+  },
 });
 export default styles;

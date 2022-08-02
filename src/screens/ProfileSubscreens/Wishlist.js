@@ -4,8 +4,11 @@ import PressBackWithTitle from '../../components/Reusable/PressBackWithTitle';
 import styles from '../../styles/globalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { useNavigation } from '@react-navigation/native';
 
 const Wishlist = () => {
+  const navigation = useNavigation();
+
   return (
     <ScrollView>
       <PressBackWithTitle title="Wishlist" />

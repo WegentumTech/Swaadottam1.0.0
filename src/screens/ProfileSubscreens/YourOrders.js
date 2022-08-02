@@ -105,7 +105,7 @@ const YourOrders = () => {
               <Text style={{fontSize: 20, color: 'black', textAlign: 'center'}}>
                 Vada Pav
               </Text>
-              <Text style={{marginLeft: 10}}>
+              <Text style={{marginLeft: 10, color: 'black'}}>
                 Satsang Nagar Colony Aktha Varanasi
               </Text>
             </View>

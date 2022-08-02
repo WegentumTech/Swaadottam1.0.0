@@ -1,10 +1,39 @@
-import {View, Text, Image} from 'react-native';
-import React from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import PressBackWithTitle from '../../components/Reusable/PressBackWithTitle';
 import styles from '../../styles/globalStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import StepIndicator from 'react-native-step-indicator';
+import {TextInput} from 'react-native-gesture-handler';
 
 const OrderStatus = () => {
+  const [currentPosition, setCurrentPosition] = useState(3);
+
+  const labels = ['Registered', 'Cooking', 'On The Way', 'Delivered'];
+  const customStyles = {
+    stepIndicatorSize: 25,
+    currentStepIndicatorSize: 30,
+    separatorStrokeWidth: 2,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: '#fe7013',
+    stepStrokeWidth: 3,
+    stepStrokeFinishedColor: '#fe7013',
+    stepStrokeUnFinishedColor: '#aaaaaa',
+    separatorFinishedColor: '#fe7013',
+    separatorUnFinishedColor: '#aaaaaa',
+    stepIndicatorFinishedColor: '#fe7013',
+    stepIndicatorUnFinishedColor: '#ffffff',
+    stepIndicatorCurrentColor: '#ffffff',
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: '#fe7013',
+    stepIndicatorLabelFinishedColor: '#ffffff',
+    stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+    labelColor: '#999999',
+    labelSize: 13,
+    currentStepLabelColor: '#fe7013',
+  };
+
   return (
     <View>
       <PressBackWithTitle title="Order Status" />
@@ -34,7 +63,7 @@ const OrderStatus = () => {
               <Text style={{fontSize: 20, color: 'black', textAlign: 'center'}}>
                 Vada Pav
               </Text>
-              <Text style={{marginLeft: 10}}>
+              <Text style={{marginLeft: 10, color: 'black'}}>
                 Satsang Nagar Colony Aktha Varanasi
               </Text>
             </View>
@@ -70,36 +99,55 @@ const OrderStatus = () => {
               marginTop: 15,
             }}></View>
 
+          <View style={{marginTop: 30}}>
+            <Text
+              style={{
+                color: 'black',
+                marginBottom: 15,
+                marginLeft: 10,
+                fontSize: 18,
+              }}>
+              Current Status
+            </Text>
+            <StepIndicator
+              stepCount={4}
+              customStyles={customStyles}
+              currentPosition={currentPosition}
+              labels={labels}
+            />
+          </View>
 
-            <View>
-                
+          <View>
+            <Text
+              style={{
+                marginLeft: 10,
+                color: 'black',
+                fontSize: 18,
+                marginTop: 30,
+              }}>
+              Post Your Review
+            </Text>
+
+            <TextInput
+              multiline={true}
+              numberOfLines={4}
+              style={styles.inputReview}
+            />
+            <View style={{flexDirection: 'row', marginLeft: 20, marginTop: 10}}>
+              <AntDesign name="star" size={18} color="#FF4D00" />
+              <AntDesign name="star" size={18} color="#FF4D00" />
+              <AntDesign name="star" size={18} color="#FF4D00" />
+              <AntDesign name="star" size={18} color="#FF4D00" />
+              <AntDesign name="staro" size={18} color="#FF4D00" />
             </View>
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <View
+              style={{alignSelf: 'center', marginTop: 35, marginBottom: 35}}>
+                <TouchableOpacity>
+              <Text style={styles.button2}>Submit</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     </View>
