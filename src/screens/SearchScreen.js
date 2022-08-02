@@ -101,7 +101,9 @@ const SearchScreen = () => {
               <Image
                 style={{width: 240, height: 200}}
                 source={require('../assets/nothing_found.webp')}
+
               />
+              <Text style={{color:"black",textAlign:"center",fontSize:20}}>Nothing Found</Text>
             </View>
           ) : (
             datas.map(hit => {

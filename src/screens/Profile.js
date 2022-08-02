@@ -1,13 +1,94 @@
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import styles from '../styles/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthKey} from "../helper/baseUrl"
+import {AuthPassword} from "../helper/baseUrl"
+import {BACKEND_URL} from "../helper/baseUrl"
+import {SIMPLE_URL} from "../helper/baseUrl"
 
+
+
+
+
+
+import axios from 'axios';
 const Profile = () => {
   const navigation = useNavigation();
+
+
+  const [userFullName, setUserFullName] = useState("")
+  const [userContactNumber, setUserContactNumber] = useState("")
+  const [userImage, setUserImage] = useState("")
+
+
+  useEffect(() => {
+    GetUserId()
+  }, [])
+
+  const GetUserId = async() =>{
+
+    const userId = await AsyncStorage.getItem("ActiveUserId")
+    console.log(userId)
+    
+
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'getuser',
+          {
+            user_id: userId,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data)
+          setUserFullName(acc.data.name)
+          setUserContactNumber(acc.data.mobile)
+          setUserImage(acc.data.profile_photo)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+  
+
+
+
+
+
+
+
+
 
   return (
     <ScrollView style={{backgroundColor: '#F26227', height: '100%'}}>
@@ -51,7 +132,7 @@ const Profile = () => {
         }}>
         <Image
           source={{
-            uri: 'https://instagram.fdel8-1.fna.fbcdn.net/v/t51.2885-19/280192147_514591870408592_8565636030206285504_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fdel8-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=Pvd4m2LW-RUAX_C5Cy1&edm=APU89FABAAAA&ccb=7-5&oh=00_AT_845unjkP3p96evdu6Ame3i3EhRxoBjcfciRXzaN_hyg&oe=62EF3609&_nc_sid=86f79a',
+            uri: SIMPLE_URL+userImage,
           }}
           style={{
             width: 120,
@@ -70,10 +151,10 @@ const Profile = () => {
             color: 'black',
             fontWeight: 'bold',
           }}>
-          Kumar Nitesh
+          {userFullName}
         </Text>
         <Text style={{textAlign: 'center', top: -35, color: 'black'}}>
-          @nitesh786
+        +91{userContactNumber}
         </Text>
 
         <View>

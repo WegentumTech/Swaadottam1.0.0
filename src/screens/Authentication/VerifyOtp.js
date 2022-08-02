@@ -14,6 +14,7 @@ import {BACKEND_URL} from '../../helper/baseUrl';
 import {AuthKey} from '../../helper/baseUrl';
 import {AuthPassword} from '../../helper/baseUrl';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VerifyOtp = () => {
   const navigation = useNavigation();
@@ -65,7 +66,7 @@ const VerifyOtp = () => {
             .post(
               BACKEND_URL + 'authentic',
               {
-                mobile: enteredNumber,
+                mobile: UserNumber,
               },
               {
                 headers: {
