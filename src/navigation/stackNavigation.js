@@ -32,7 +32,7 @@ function StackNavigation() {
         headerShown: false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="SplashScreen">
+      initialRouteName="Home">
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />
