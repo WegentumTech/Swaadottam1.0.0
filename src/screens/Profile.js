@@ -10,7 +10,7 @@ const Profile = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={{backgroundColor: '#F26227', height: '100%'}}>
+    <ScrollView style={{backgroundColor: '#F26227', height: '100%'}}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -77,7 +77,7 @@ const Profile = () => {
         </Text>
 
         <View>
-          <TouchableOpacity style={styles.profileModules}>
+          <TouchableOpacity onPress={()=>navigation.navigate("YourOrders")} style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Your Orders
             </Text>
@@ -91,7 +91,7 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.profileModules}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Referal")} style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Referal’s & Earnings
             </Text>
@@ -105,7 +105,7 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.profileModules}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Preferences")} style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               My Preferences
             </Text>
@@ -119,7 +119,7 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.profileModules}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Help")} style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Help
             </Text>
@@ -133,7 +133,7 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.profileModules}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Wishlist")} style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Wishlist
             </Text>
@@ -148,13 +148,13 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={{alignSelf: 'center', marginTop: 50}}>
+        <View style={{alignSelf: 'center', marginTop: 50,marginBottom:50}}>
           <TouchableOpacity>
             <Text style={styles.button2}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -350,5 +350,13 @@ const styles = StyleSheet.create({
     marginTop:15,
     flexDirection:"row"
   },
+  referandearnimage: {
+    width: "30%",
+    height: 120,
+    position:"absolute",
+    alignSelf:"flex-end",
+    marginTop:35,
+    right:15
+  },
 });
 export default styles;
