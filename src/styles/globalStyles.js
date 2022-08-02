@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#4F4F4F',
     backgroundColor: 'white',
+    // paddingHorizontal:10
   },
   tagStyle: {
     fontSize: 15,
