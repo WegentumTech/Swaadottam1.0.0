@@ -6,10 +6,19 @@ import PressBack from '../components/Reusable/PressBack';
 import styles from '../styles/globalStyles';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import Toast from 'react-native-toast-message';
 
 const EditProfile = () => {
   const [imageLink, setImageLink] = useState('');
   const refRBSheet = useRef();
+
+  const clicked = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Your Profile Is Updated',
+      text2: 'You Can Go Back Now',
+    });
+  };
 
   const handleCameraOpen = async () => {
     const result = await launchCamera();
@@ -25,6 +34,7 @@ const EditProfile = () => {
 
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
+      <Toast position="bottom" />
       <PressBack />
 
       <View style={{marginTop: 50}}>
@@ -129,7 +139,7 @@ const EditProfile = () => {
       </View>
 
       <View style={{alignSelf: 'center', marginTop: 40}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={clicked}>
           <Text style={styles.button2}>Save</Text>
         </TouchableOpacity>
 
