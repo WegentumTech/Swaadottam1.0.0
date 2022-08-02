@@ -66,7 +66,7 @@ const RecommendedProducts = () => {
             <TouchableOpacity
               key={hit.id}
               onPress={() =>
-                navigation.navigate('SingleMealScreen', {MealId: 1})
+                navigation.navigate('SingleMealScreen', {MealId: hit.id})
               }>
               <View style={{marginTop: 20}}>
                 <View
@@ -79,7 +79,7 @@ const RecommendedProducts = () => {
                     paddingBottom: 30,
                   }}>
                   <Image
-                    source={{uri:SIMPLE_URL+hit.meal_image}}
+                    source={{uri: SIMPLE_URL + hit.meal_image}}
                     style={styles.RecommendProducts}
                   />
                   <View
@@ -90,7 +90,7 @@ const RecommendedProducts = () => {
                     }}>
                     <View style={{flex: 1}}>
                       <Text style={{color: '#333333', fontSize: 20}}>
-                       {hit.meal_name}
+                        {hit.meal_name}
                       </Text>
                       <Text style={{color: '#707070'}}>
                         {hit.category_name}
@@ -109,7 +109,8 @@ const RecommendedProducts = () => {
                           fontSize: 15,
                           fontWeight: 'bold',
                         }}>
-                        {hit.rating} <Ionicons name="star" size={18} color="white" />
+                        {hit.rating}{' '}
+                        <Ionicons name="star" size={18} color="white" />
                       </Text>
                       <Text
                         style={{
@@ -118,8 +119,9 @@ const RecommendedProducts = () => {
                           color: '#9E9E9E',
                         }}>
                         {' '}
-                        <Fontisto name="fire" size={20} color="#D8553A" /> {hit.calorie}
-                         cal
+                        <Fontisto name="fire" size={20} color="#D8553A" />{' '}
+                        {hit.calorie}
+                        cal
                       </Text>
                     </View>
                   </View>
