@@ -372,5 +372,15 @@ const styles = StyleSheet.create({
     color: '#4F4F4F',
     backgroundColor: 'white',
   },
+  button2Disabled: {
+    backgroundColor: '#949494',
+    padding: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius: 25,
+    width: 180,
+    textAlign: 'center',
+    fontSize: 18,
+  },
 });
 export default styles;

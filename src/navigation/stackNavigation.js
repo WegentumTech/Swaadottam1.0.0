@@ -22,6 +22,7 @@ import Wishlist from '../screens/ProfileSubscreens/Wishlist';
 import Preferences from '../screens/ProfileSubscreens/Preferences';
 import Menu from '../screens/Menu';
 import OrderStatus from '../screens/ProfileSubscreens/OrderStatus';
+import Starter from '../screens/Starter';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,7 @@ function StackNavigation() {
       <Stack.Screen name="Preferences" component={Preferences} />
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="OrderStatus" component={OrderStatus} />
+      <Stack.Screen name="Starter" component={Starter} />
     </Stack.Navigator>
   );
 }

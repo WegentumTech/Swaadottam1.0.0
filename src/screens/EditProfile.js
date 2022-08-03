@@ -7,10 +7,156 @@ import styles from '../styles/globalStyles';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import {AuthKey} from '../helper/baseUrl';
+import {AuthPassword} from '../helper/baseUrl';
+import {BACKEND_URL} from '../helper/baseUrl';
+import {SIMPLE_URL} from '../helper/baseUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EditProfile = () => {
   const [imageLink, setImageLink] = useState('');
   const refRBSheet = useRef();
+  const [datas, setDatas] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [userId, setUserId] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+
+  const [fileName, setFileName] = useState('');
+  const [fileSize, setFileSize] = useState('');
+  const [height, setHeight] = useState('');
+  const [type, setType] = useState('');
+  const [width, setWidth] = useState('');
+
+  useEffect(() => {
+    GetUserId();
+  }, []);
+
+  const GetUserId = async () => {
+    const userId = await AsyncStorage.getItem('ActiveUserId');
+    console.log(userId);
+    setUserId(userId);
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'getuser',
+          {
+            user_id: userId,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          setDatas(acc.data);
+          setFullName({fullName: acc.data.name});
+          setEmail({email: acc.data.Email});
+          setContactNumber({contactNumber: acc.data.mobile});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const UpdateUser = async () => {
+    // console.log(fullName.fullName);
+    // console.log(email.email);
+    // console.log(contactNumber.contactNumber);
+    // console.log(userId);
+    console.log(imageUrl);
+    console.log(type);
+    console.log(fileName);
+
+    // new api will be here
+
+    const formData = new FormData();
+    formData.append('file', {
+      uri: imageUrl,
+      type: type,
+      name: fileName,
+    });
+
+    let respo = await fetch(BACKEND_URL + 'uploadi', {
+      method: 'post',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    let responseJson = await respo.json();
+    console.log(responseJson);
+
+    Toast.show({
+      type: 'success',
+      text1: 'Your Profile Is Updated',
+      text2: 'You Can Go Back Now',
+    });
+
+    // try {
+    //   axios
+    //     .post(
+    //       BACKEND_URL + 'uploadi',
+
+    //       formData,
+
+    //       {
+    //         headers: {
+    //           // authkey: AuthKey,
+    //           // secretkey: AuthPassword,
+    //           'content-type': 'multipart/form-data',
+    //         },
+    //       },
+    //     )
+    //     .then(acc => {
+    //       console.log(acc.data);
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    // old api to upload other credentials
+
+    // try {
+    //   axios
+    //     .post(
+    //       BACKEND_URL + 'updateuser',
+    //       {
+    //         user_id: userId,
+    //         name: fullName.fullName,
+    //         mobile: contactNumber.contactNumber,
+    //         Email: email.email,
+    //         profile_photo:imageUrl
+    //       },
+    //       {
+    //         headers: {
+    //           authkey: AuthKey,
+    //           secretkey: AuthPassword,
+    //         },
+    //       },
+    //     )
+    //     .then(acc => {
+    //       console.log('i got this response ==> '+acc.data);
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
 
   const clicked = () => {
     Toast.show({
@@ -24,12 +170,22 @@ const EditProfile = () => {
     const result = await launchCamera();
     console.log(result);
     setImageLink(result.assets[0].uri);
+    setImageUrl(result.assets[0].uri);
+    setFileName(result.assets[0].fileName);
+    setFileSize(result.assets[0].fileSize);
+    setHeight(result.assets[0].height);
+    setType(result.assets[0].type);
   };
 
   const handleGalleryOpen = async () => {
     const result = await launchImageLibrary();
     console.log(result);
     setImageLink(result.assets[0].uri);
+    setImageUrl(result.assets[0].uri);
+    setFileName(result.assets[0].fileName);
+    setFileSize(result.assets[0].fileSize);
+    setHeight(result.assets[0].height);
+    setType(result.assets[0].type);
   };
 
   return (
@@ -54,7 +210,7 @@ const EditProfile = () => {
         ) : (
           <Image
             source={{
-              uri: 'https://instagram.fdel8-1.fna.fbcdn.net/v/t51.2885-19/280192147_514591870408592_8565636030206285504_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fdel8-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=Pvd4m2LW-RUAX_C5Cy1&edm=APU89FABAAAA&ccb=7-5&oh=00_AT_845unjkP3p96evdu6Ame3i3EhRxoBjcfciRXzaN_hyg&oe=62EF3609&_nc_sid=86f79a',
+              uri: SIMPLE_URL + datas.profile_photo,
             }}
             style={{
               width: 120,
@@ -82,7 +238,13 @@ const EditProfile = () => {
 
       <View style={{marginHorizontal: 30, marginTop: 20}}>
         <View>
-          <TextInput style={styles.billingInput} />
+          <TextInput
+            onChangeText={text => {
+              setFullName({fullName: text});
+            }}
+            defaultValue={datas.name}
+            style={styles.billingInput}
+          />
           <Text
             style={{
               color: 'black',
@@ -96,7 +258,13 @@ const EditProfile = () => {
         </View>
 
         <View>
-          <TextInput style={styles.billingInput} />
+          <TextInput
+            onChangeText={text => {
+              setEmail({email: text});
+            }}
+            defaultValue={datas.Email}
+            style={styles.billingInput}
+          />
           <Text
             style={{
               color: 'black',
@@ -110,7 +278,13 @@ const EditProfile = () => {
         </View>
 
         <View>
-          <TextInput style={styles.billingInput} />
+          <TextInput
+            onChangeText={text => {
+              setContactNumber({contactNumber: text});
+            }}
+            defaultValue={datas.mobile}
+            style={styles.billingInput}
+          />
           <Text
             style={{
               color: 'black',
@@ -125,10 +299,11 @@ const EditProfile = () => {
       </View>
 
       <View style={{alignSelf: 'center', marginTop: 40}}>
-        <TouchableOpacity onPress={clicked}>
+        <TouchableOpacity onPress={UpdateUser}>
           <Text style={styles.button2}>Save</Text>
         </TouchableOpacity>
-
+      </View>
+      <View style={{alignSelf: 'center', marginTop: 40}}>
         <RBSheet
           animationType="slide"
           height={130}

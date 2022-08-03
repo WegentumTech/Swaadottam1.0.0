@@ -18,6 +18,7 @@ import {AuthPassword} from '../../helper/baseUrl';
 import {BACKEND_URL} from '../../helper/baseUrl';
 import {SIMPLE_URL} from '../../helper/baseUrl';
 import {useRoute} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SingleMealScreen = () => {
   const navigation = useNavigation();
@@ -44,7 +45,7 @@ const SingleMealScreen = () => {
           },
         )
         .then(acc => {
-          // console.log(acc.data);
+          console.log(acc.data);
           setDatas(acc.data);
         })
         .catch(err => {
@@ -54,6 +55,75 @@ const SingleMealScreen = () => {
       console.log(error);
     }
   }, []);
+
+
+
+  const handleAddToCart = async (id,title,image,price,desciption,quantity) => {
+
+
+    const userId = await AsyncStorage.getItem('ActiveUserId');
+    console.log(userId);
+
+
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'addcart',
+          {
+            userid: userId,
+            product_id:id,
+            quatity:quantity
+
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          navigation.navigate("Cart")
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+
+
+
+   
+
+
+
+
+
+
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <ScrollView>
@@ -162,7 +232,16 @@ const SingleMealScreen = () => {
             </View>
 
             <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <TouchableOpacity onPress={() =>
+                  handleAddToCart(
+                    datas.id,
+                    datas.title,
+                    datas.image,
+                    datas.price,
+                    datas.desciption,
+                    number,
+                  )
+                }>
                 <Text style={styles.AddToCart}>
                   Add To{' '}
                   <FontAwesome5
