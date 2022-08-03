@@ -1,41 +1,31 @@
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../styles/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthKey} from "../helper/baseUrl"
-import {AuthPassword} from "../helper/baseUrl"
-import {BACKEND_URL} from "../helper/baseUrl"
-import {SIMPLE_URL} from "../helper/baseUrl"
-
-
-
-
-
+import {AuthKey} from '../helper/baseUrl';
+import {AuthPassword} from '../helper/baseUrl';
+import {BACKEND_URL} from '../helper/baseUrl';
+import {SIMPLE_URL} from '../helper/baseUrl';
 
 import axios from 'axios';
 const Profile = () => {
   const navigation = useNavigation();
 
-
-  const [userFullName, setUserFullName] = useState("")
-  const [userContactNumber, setUserContactNumber] = useState("")
-  const [userImage, setUserImage] = useState("")
-
+  const [userFullName, setUserFullName] = useState('');
+  const [userContactNumber, setUserContactNumber] = useState('');
+  const [userImage, setUserImage] = useState('');
 
   useEffect(() => {
-    GetUserId()
-  }, [])
+    GetUserId();
+  }, []);
 
-  const GetUserId = async() =>{
-
-    const userId = await AsyncStorage.getItem("ActiveUserId")
-    console.log(userId)
-    
-
+  const GetUserId = async () => {
+    const userId = await AsyncStorage.getItem('ActiveUserId');
+    console.log(userId);
 
     try {
       axios
@@ -52,10 +42,10 @@ const Profile = () => {
           },
         )
         .then(acc => {
-          console.log(acc.data)
-          setUserFullName(acc.data.name)
-          setUserContactNumber(acc.data.mobile)
-          setUserImage(acc.data.profile_photo)
+          console.log(acc.data);
+          setUserFullName(acc.data.name);
+          setUserContactNumber(acc.data.mobile);
+          setUserImage(acc.data.profile_photo);
         })
         .catch(err => {
           console.log(err);
@@ -63,32 +53,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  }
-  
-
-
-
-
-
-
-
-
+  };
 
   return (
     <ScrollView style={{backgroundColor: '#F26227', height: '100%'}}>
@@ -132,7 +97,7 @@ const Profile = () => {
         }}>
         <Image
           source={{
-            uri: SIMPLE_URL+userImage,
+            uri:  !userImage ? "https://cdn.wallpaperdirect.com/asset/img/product/157207/tiled/metropolitan-stories-plain-slate-grey-wallpaper-tiled-157207.jpg" :  SIMPLE_URL + userImage,
           }}
           style={{
             width: 120,
@@ -151,14 +116,16 @@ const Profile = () => {
             color: 'black',
             fontWeight: 'bold',
           }}>
-          {userFullName}
+          {!userFullName ? "Loading Your Name":userFullName}
         </Text>
         <Text style={{textAlign: 'center', top: -35, color: 'black'}}>
-        +91{userContactNumber}
+          +91{!userContactNumber ? ".........." :userContactNumber}
         </Text>
 
         <View>
-          <TouchableOpacity onPress={()=>navigation.navigate("YourOrders")} style={styles.profileModules}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('YourOrders')}
+            style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Your Orders
             </Text>
@@ -172,7 +139,9 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Referal")} style={styles.profileModules}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Referal')}
+            style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Referal’s & Earnings
             </Text>
@@ -186,7 +155,9 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Preferences")} style={styles.profileModules}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Preferences')}
+            style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               My Preferences
             </Text>
@@ -200,7 +171,9 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Help")} style={styles.profileModules}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Help')}
+            style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Help
             </Text>
@@ -214,7 +187,9 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Wishlist")} style={styles.profileModules}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Wishlist')}
+            style={styles.profileModules}>
             <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
               Wishlist
             </Text>
@@ -229,7 +204,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={{alignSelf: 'center', marginTop: 50,marginBottom:50}}>
+        <View style={{alignSelf: 'center', marginTop: 50, marginBottom: 50}}>
           <TouchableOpacity>
             <Text style={styles.button2}>Logout</Text>
           </TouchableOpacity>

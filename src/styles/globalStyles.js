@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   },
   categoryItemImage: {
     width: '100%',
-    height: 150,
+    height: 130,
     opacity: 0.7,
     backgroundColor: 'black',
     elevation: 10,

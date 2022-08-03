@@ -51,7 +51,7 @@ const TopCategories = () => {
           datas.map(hit => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate('CategotyItems')}
+                onPress={() => navigation.navigate('CategotyItems',{categoryId:hit.id})}
                 key={hit.id}>
                 <View>
                   <Image

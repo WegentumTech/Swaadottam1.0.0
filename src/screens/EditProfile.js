@@ -105,20 +105,6 @@ const EditProfile = () => {
               top: 5,
               left: 12,
             }}>
-            Username
-          </Text>
-        </View>
-
-        <View>
-          <TextInput style={styles.billingInput} />
-          <Text
-            style={{
-              color: 'black',
-              backgroundColor: 'white',
-              position: 'absolute',
-              top: 5,
-              left: 12,
-            }}>
             Email
           </Text>
         </View>
