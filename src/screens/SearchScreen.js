@@ -26,7 +26,7 @@ const SearchScreen = () => {
   const [datas, setDatas] = useState('');
 
   if (inputText.inputText === '') {
-    console.log('this is empty');
+    // console.log('this is empty');
     setInputText({inputText: 'none'});
   }
 
@@ -46,7 +46,7 @@ const SearchScreen = () => {
           },
         )
         .then(acc => {
-          console.log(acc.data);
+          // console.log(acc.data);
           setDatas(acc.data);
         })
         .catch(err => {

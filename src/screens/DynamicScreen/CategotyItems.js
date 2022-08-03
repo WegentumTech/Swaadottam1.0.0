@@ -18,7 +18,7 @@ const CategotyItems = () => {
   const route = useRoute();
   const [datas, setDatas] = useState('');
 
-  console.log(route.params.categoryId);
+  // console.log(route.params.categoryId);
 
   useEffect(() => {
     try {

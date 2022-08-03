@@ -26,7 +26,7 @@ const SingleMealScreen = () => {
 
   const route = useRoute();
 
-  console.log(route.params.MealId);
+  // console.log(route.params.MealId);
 
   useEffect(() => {
     try {
@@ -44,7 +44,7 @@ const SingleMealScreen = () => {
           },
         )
         .then(acc => {
-          console.log(acc.data);
+          // console.log(acc.data);
           setDatas(acc.data);
         })
         .catch(err => {
