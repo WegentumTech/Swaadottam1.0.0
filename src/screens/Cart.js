@@ -11,6 +11,7 @@ import PressBack from '../components/Reusable/PressBack';
 import styles from '../styles/globalStyles';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -19,17 +20,20 @@ import {AuthPassword} from '../helper/baseUrl';
 import {BACKEND_URL} from '../helper/baseUrl';
 import {SIMPLE_URL} from '../helper/baseUrl';
 const Cart = () => {
-  const [item, setItem] = useState(1);
+  const [item, setItem] = useState(0);
   const navigation = useNavigation();
-  const [datas, setDatas] = useState("")
+  const [datas, setDatas] = useState('');
+  const [goToRefresh, setGoToRefresh] = useState(false);
 
   useEffect(() => {
     getCartData();
+    console.log('refreshed');
   }, []);
 
   const getCartData = async () => {
+    console.log('this is called');
     const userId = await AsyncStorage.getItem('ActiveUserId');
-    console.log(userId);
+    // console.log(userId);
 
     try {
       axios
@@ -46,9 +50,97 @@ const Cart = () => {
           },
         )
         .then(acc => {
-          console.log(acc.data);
+          // console.log(acc.data);
           setDatas(acc.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  let latPrice = 0;
 
+  const increaseValue = id => {
+    console.log(id);
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'increment',
+          {
+            cartid: id,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          // console.log(acc.data);
+          // setDatas(acc.data);
+          getCartData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const decreaseValue = id => {
+    console.log(id);
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'decrement',
+          {
+            cartid: id,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          // console.log(acc.data);
+          // setDatas(acc.data);
+          getCartData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const letsTry = e => {
+    console.log(e.target);
+  };
+
+  const handleDeleteCartItem = id => {
+    console.log(id);
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'delcart',
+          {
+            cartid: id,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          getCartData();
         })
         .catch(err => {
           console.log(err);
@@ -63,296 +155,135 @@ const Cart = () => {
       <PressBack />
       <ScrollView>
         <View style={{marginLeft: 10, marginTop: 30, flexDirection: 'row'}}>
-          <Text style={styles.MainPageHead}>Your Order</Text>
+          <Text style={styles.MainPageHead}>Your Cart</Text>
           <Feather
             name="shopping-bag"
             size={20}
             color="black"
             style={{marginLeft: 20, marginTop: 3}}
           />
-          <Text style={{color: 'black', marginLeft: 5, marginTop: 3}}>3</Text>
+          <Text style={{color: 'black', marginLeft: 5, marginTop: 3}}>
+            {datas ? datas.length : '0'}
+          </Text>
         </View>
 
-
-
-        
         <View>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                marginLeft: 15,
-                marginTop: 20,
-                flexDirection: 'row',
-                flex: 1,
-              }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('SingleMealScreen')}>
-                <Image
-                  style={styles.cartProductImage}
-                  source={{
-                    uri: 'https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?width=1200&height=630&fit=crop',
-                  }}
-                />
-              </TouchableOpacity>
+          {datas ? (
+            datas.map(hit => {
+              latPrice = Number(hit.meal_price) + latPrice;
 
-              <View style={{flex: 1, marginLeft: 5}}>
-                <Text
-                  style={{fontWeight: 'bold', color: '#0A191E', fontSize: 18}}>
-                  Fried Rice
-                </Text>
-                <Text style={{color: 'black'}}>
-                  Lorem Ipsum some text some text some text
-                </Text>
-              </View>
+              let curPrice = Number(hit.Quatity);
 
-              <View style={{flex: 1.5}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    borderColor: '#F8774A',
-                    borderWidth: 1.5,
-                    borderStyle: 'solid',
-                    borderRadius: 20,
-                    paddingHorizontal: 20,
-                  }}>
-                  {item === 1 ? (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}>
-                      -
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}
-                      onPress={() => setItem(item - 1)}>
-                      -
-                    </Text>
-                  )}
-
-                  <Text
+              return (
+                <View key={hit.id} style={{flexDirection: 'row'}}>
+                  <View
                     style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
+                      marginLeft: 15,
+                      marginTop: 20,
+                      flexDirection: 'row',
+                      flex: 1,
                     }}>
-                    {item}
-                  </Text>
-                  <Text
-                    style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
-                    }}
-                    onPress={() => setItem(item + 1)}>
-                    +
-                  </Text>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('SingleMealScreen', {
+                          MealId: hit.product_id,
+                        })
+                      }>
+                      <Image
+                        style={styles.cartProductImage}
+                        source={{
+                          uri: SIMPLE_URL + hit.meal_image,
+                        }}
+                      />
+                    </TouchableOpacity>
+
+                    <View style={{flex: 1, marginLeft: 5}}>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          color: '#0A191E',
+                          fontSize: 18,
+                        }}>
+                        {hit.meal_name}
+                      </Text>
+                      <Text style={{color: 'black'}}>
+                        {hit.meal_description.slice(0, 40)}...
+                      </Text>
+                    </View>
+
+                    <View style={{flex: 1.5}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignSelf: 'center',
+                          borderColor: '#F8774A',
+                          borderWidth: 1.5,
+                          borderStyle: 'solid',
+                          borderRadius: 20,
+                          paddingHorizontal: 20,
+                        }}>
+                        {curPrice === 1 ? (
+                          <TouchableOpacity
+                            onPress={() => handleDeleteCartItem(hit.cartid)}>
+                            <MaterialIcons
+                              style={{marginTop: 10}}
+                              name="delete"
+                              size={18}
+                              color="#F8774A"
+                            />
+                          </TouchableOpacity>
+                        ) : (
+                          <Text
+                            onPress={() => decreaseValue(hit.cartid)}
+                            style={{
+                              margin: 5,
+                              fontSize: 20,
+                              color: '#F8774A',
+                              fontWeight: 'bold',
+                            }}>
+                            -
+                          </Text>
+                        )}
+
+                        <Text
+                          style={{
+                            margin: 5,
+                            fontSize: 20,
+                            color: '#F8774A',
+                            fontWeight: 'bold',
+                          }}>
+                          {curPrice}
+                        </Text>
+                        <Text
+                          onPress={() => increaseValue(hit.cartid)}
+                          style={{
+                            margin: 5,
+                            fontSize: 20,
+                            color: '#F8774A',
+                            fontWeight: 'bold',
+                          }}>
+                          +
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={{flex: 0.5, marginRight: 15}}>
+                      <Text
+                        style={{
+                          alignSelf: 'flex-end',
+                          fontSize: 15,
+                          color: 'black',
+                        }}>
+                        ₹{hit.meal_price}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-              <View style={{flex: 0.5, marginRight: 15}}>
-                <Text
-                  style={{alignSelf: 'flex-end', fontSize: 15, color: 'black'}}>
-                  ₹100
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                marginLeft: 15,
-                marginTop: 20,
-                flexDirection: 'row',
-                flex: 1,
-              }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('SingleMealScreen')}>
-                <Image
-                  style={styles.cartProductImage}
-                  source={{
-                    uri: 'https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?width=1200&height=630&fit=crop',
-                  }}
-                />
-              </TouchableOpacity>
-
-              <View style={{flex: 1, marginLeft: 5}}>
-                <Text
-                  style={{fontWeight: 'bold', color: '#0A191E', fontSize: 18}}>
-                  Fried Rice
-                </Text>
-                <Text style={{color: 'black'}}>
-                  Lorem Ipsum some text some text some text
-                </Text>
-              </View>
-
-              <View style={{flex: 1.5}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    borderColor: '#F8774A',
-                    borderWidth: 1.5,
-                    borderStyle: 'solid',
-                    borderRadius: 20,
-                    paddingHorizontal: 20,
-                  }}>
-                  {item === 1 ? (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}>
-                      -
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}
-                      onPress={() => setItem(item - 1)}>
-                      -
-                    </Text>
-                  )}
-
-                  <Text
-                    style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
-                    }}>
-                    {item}
-                  </Text>
-                  <Text
-                    style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
-                    }}
-                    onPress={() => setItem(item + 1)}>
-                    +
-                  </Text>
-                </View>
-              </View>
-              <View style={{flex: 0.5, marginRight: 15}}>
-                <Text
-                  style={{alignSelf: 'flex-end', fontSize: 15, color: 'black'}}>
-                  ₹100
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                marginLeft: 15,
-                marginTop: 20,
-                flexDirection: 'row',
-                flex: 1,
-              }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('SingleMealScreen')}>
-                <Image
-                  style={styles.cartProductImage}
-                  source={{
-                    uri: 'https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?width=1200&height=630&fit=crop',
-                  }}
-                />
-              </TouchableOpacity>
-
-              <View style={{flex: 1, marginLeft: 5}}>
-                <Text
-                  style={{fontWeight: 'bold', color: '#0A191E', fontSize: 18}}>
-                  Fried Rice
-                </Text>
-                <Text style={{color: 'black'}}>
-                  Lorem Ipsum some text some text some text
-                </Text>
-              </View>
-
-              <View style={{flex: 1.5}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    borderColor: '#F8774A',
-                    borderWidth: 1.5,
-                    borderStyle: 'solid',
-                    borderRadius: 20,
-                    paddingHorizontal: 20,
-                  }}>
-                  {item === 1 ? (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}>
-                      -
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{
-                        margin: 5,
-                        fontSize: 20,
-                        color: '#F8774A',
-                        fontWeight: 'bold',
-                      }}
-                      onPress={() => setItem(item - 1)}>
-                      -
-                    </Text>
-                  )}
-
-                  <Text
-                    style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
-                    }}>
-                    {item}
-                  </Text>
-                  <Text
-                    style={{
-                      margin: 5,
-                      fontSize: 20,
-                      color: '#F8774A',
-                      fontWeight: 'bold',
-                    }}
-                    onPress={() => setItem(item + 1)}>
-                    +
-                  </Text>
-                </View>
-              </View>
-              <View style={{flex: 0.5, marginRight: 15}}>
-                <Text
-                  style={{alignSelf: 'flex-end', fontSize: 15, color: 'black'}}>
-                  ₹100
-                </Text>
-              </View>
-            </View>
-          </View>
+              );
+            })
+          ) : (
+            <></>
+          )}
         </View>
-
-       
 
         <TouchableOpacity
           style={{marginVertical: 20}}
@@ -369,7 +300,8 @@ const Cart = () => {
               marginTop: 10,
               fontSize: 20,
             }}>
-            Payment <AntDesign name="arrowright" size={20} color="white" />
+            Pay ₹{latPrice}{' '}
+            <AntDesign name="arrowright" size={20} color="white" />
           </Text>
         </TouchableOpacity>
       </ScrollView>

@@ -27,7 +27,6 @@ const SingleMealScreen = () => {
 
   const route = useRoute();
 
-  // console.log(route.params.MealId);
 
   useEffect(() => {
     try {
@@ -56,13 +55,61 @@ const SingleMealScreen = () => {
     }
   }, []);
 
-
-
-  const handleAddToCart = async (id,title,image,price,desciption,quantity) => {
-
-
+  const handleAddToCart = async (
+    id,
+    title,
+    image,
+    price,
+    desciption,
+    quantity,
+  ) => {
     const userId = await AsyncStorage.getItem('ActiveUserId');
-    console.log(userId);
+    // console.log(userId);
+    console.log(id)
+
+
+    const CheckIfMealInCart = () =>{
+
+      try {
+        axios
+          .post(
+            BACKEND_URL + 'getcart',
+            {
+              userid:userId,
+            },
+            {
+              headers: {
+                authkey: AuthKey,
+                secretkey: AuthPassword,
+              },
+            },
+          )
+          .then(acc => {
+            console.log(acc.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    CheckIfMealInCart()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72,9 +119,8 @@ const SingleMealScreen = () => {
           BACKEND_URL + 'addcart',
           {
             userid: userId,
-            product_id:id,
-            quatity:quantity
-
+            product_id: id,
+            quatity: quantity,
           },
           {
             headers: {
@@ -85,7 +131,7 @@ const SingleMealScreen = () => {
         )
         .then(acc => {
           console.log(acc.data);
-          navigation.navigate("Cart")
+          navigation.navigate('Cart');
         })
         .catch(err => {
           console.log(err);
@@ -93,37 +139,7 @@ const SingleMealScreen = () => {
     } catch (error) {
       console.log(error);
     }
-
-
-
-
-   
-
-
-
-
-
-
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <ScrollView>
@@ -232,7 +248,8 @@ const SingleMealScreen = () => {
             </View>
 
             <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <TouchableOpacity onPress={() =>
+              <TouchableOpacity
+                onPress={() =>
                   handleAddToCart(
                     datas.id,
                     datas.title,

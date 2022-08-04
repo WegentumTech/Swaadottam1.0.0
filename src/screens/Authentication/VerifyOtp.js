@@ -77,7 +77,11 @@ const VerifyOtp = () => {
             )
             .then(acc => {
               const valueString = JSON.stringify(acc.data.user_id);
-              AsyncStorage.setItem('ActiveUserId', valueString);
+              console.log(valueString)
+             AsyncStorage.setItem('ActiveUserId', valueString);
+            
+            
+            
             })
             .catch(err => {
               console.log(err);
