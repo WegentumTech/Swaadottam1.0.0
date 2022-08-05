@@ -172,7 +172,7 @@ const BillingAndPayment = () => {
           <View style={{alignSelf: 'center', marginTop: 20, marginBottom: 20}}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('OrderSummary', {
+                navigation.replace('OrderSummary', {
                   billingName: billingName.billingName,
                   address: address.address,
                   contactNumber: contactNumber.contactNumber,

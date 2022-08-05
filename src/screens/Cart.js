@@ -310,7 +310,7 @@ const Cart = () => {
 
           <TouchableOpacity
             style={{marginVertical: 20}}
-            onPress={() => navigation.navigate('BillingAndPayment',{totalPayment:latPrice})}>
+            onPress={() => navigation.replace('BillingAndPayment',{totalPayment:latPrice})}>
             <Text
               style={{
                 backgroundColor: '#F8774A',

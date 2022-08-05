@@ -1,13 +1,58 @@
-import {View, Text, Image, TouchableOpacity,TextInput} from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput,ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import PressBackWithTitle from '../../components/Reusable/PressBackWithTitle';
 import styles from '../../styles/globalStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import StepIndicator from 'react-native-step-indicator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {
+  AuthKey,
+  AuthPassword,
+  BACKEND_URL,
+  SIMPLE_URL,
+} from '../../helper/baseUrl';
 
 const OrderStatus = () => {
-  const [currentPosition, setCurrentPosition] = useState(3);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const [datas, setDatas] = useState('');
 
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const userId = await AsyncStorage.getItem('ActiveUserId');
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'order',
+          {
+            userid: userId,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          setDatas(acc.data);
+        
+          setCurrentPosition(Number(acc.data[0].order_status))
+          
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const labels = ['Registered', 'Cooking', 'On The Way', 'Delivered'];
   const customStyles = {
@@ -34,9 +79,15 @@ const OrderStatus = () => {
     currentStepLabelColor: '#fe7013',
   };
 
+  
+
+
+
   return (
-    <View>
+    <ScrollView>
       <PressBackWithTitle title="Order Status" />
+      {
+        datas ?
 
       <View>
         <View
@@ -61,15 +112,15 @@ const OrderStatus = () => {
             </View>
             <View style={{flex: 1}}>
               <Text style={{fontSize: 20, color: 'black', textAlign: 'center'}}>
-                Vada Pav
+               {datas[0].order_for_name}
               </Text>
               <Text style={{marginLeft: 10, color: 'black'}}>
-                Satsang Nagar Colony Aktha Varanasi
+              {datas[0].address}
               </Text>
             </View>
             <View style={{flex: 1}}>
-              <Text style={{color: 'black', textAlign: 'right', fontSize: 20}}>
-                ₹ 110.00
+              <Text style={{color: 'green', textAlign: 'right', fontSize: 20}}>
+                ₹ {datas[0].payment}
               </Text>
             </View>
           </View>
@@ -84,11 +135,23 @@ const OrderStatus = () => {
 
           <View style={{marginHorizontal: 5, marginTop: 10}}>
             <Text style={{color: '#625F5F', fontSize: 15}}>ITEMS</Text>
-            <Text style={{color: 'black'}}>1 X Pav Bhaji with Gravy</Text>
+
+
+
+            {
+              datas.map((hit)=>{
+                return  <Text key={hit.id} style={{color: 'black'}}>{hit.quantity} X Pav Bhaji with Gravy</Text>
+              })
+            }
+
+
+
+
+           
             <Text style={{color: '#625F5F', fontSize: 15, marginTop: 10}}>
               ORDERED ON
             </Text>
-            <Text style={{color: 'black'}}>02 July 2022 at 2:16 PM</Text>
+            <Text style={{color: 'black'}}>{datas[0].created_at}</Text>
           </View>
 
           <View
@@ -143,14 +206,21 @@ const OrderStatus = () => {
 
             <View
               style={{alignSelf: 'center', marginTop: 35, marginBottom: 35}}>
-                <TouchableOpacity>
-              <Text style={styles.button2}>Submit</Text>
-                </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.button2}>Submit</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
       </View>
-    </View>
+
+        :
+
+
+        <></>
+      }
+
+    </ScrollView>
   );
 };
 

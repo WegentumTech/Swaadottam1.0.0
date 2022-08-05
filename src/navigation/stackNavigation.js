@@ -24,6 +24,7 @@ import Menu from '../screens/Menu';
 import OrderStatus from '../screens/ProfileSubscreens/OrderStatus';
 import Starter from '../screens/Starter';
 import OrderSummary from '../screens/OrderSummary';
+import PaymentSucess from '../screens/PaymentSucess';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,7 @@ function StackNavigation() {
       <Stack.Screen name="OrderStatus" component={OrderStatus} />
       <Stack.Screen name="Starter" component={Starter} />
       <Stack.Screen name="OrderSummary" component={OrderSummary} />
+      <Stack.Screen name="PaymentSucess" component={PaymentSucess} />
     </Stack.Navigator>
   );
 }

@@ -1,10 +1,12 @@
-import {View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput,ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import PressBackWithTitle from '../components/Reusable/PressBackWithTitle';
 import styles from '../styles/globalStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useRoute} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+
 import axios from 'axios';
 import {
   AuthKey,
@@ -14,10 +16,11 @@ import {
 } from '../helper/baseUrl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
 const OrderSummary = () => {
   const route = useRoute();
   const [datas, setDatas] = useState('');
+  const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getCartData();
@@ -43,6 +46,47 @@ const OrderSummary = () => {
         .then(acc => {
           console.log(acc.data);
           setDatas(acc.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePayOnline = async () => {
+    setIsLoading(true);
+    console.log('clicked');
+    const userId = await AsyncStorage.getItem('ActiveUserId');
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'cartorderplace',
+          {
+            userid: userId,
+            payment: route.params.totPayment,
+            payment_status: 'pending',
+            payment_method: 'Cash On Delivery',
+            payment_ref: 'none',
+            description: route.params.remark,
+            order_status: '0',
+            order_for_name: route.params.billingName,
+            order_for_mobile: route.params.contactNumber,
+            address: route.params.address,
+            zip: route.params.areaCode,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          // console.log(acc.data);
+          navigation.replace('PaymentSucess');
         })
         .catch(err => {
           console.log(err);
@@ -108,8 +152,7 @@ const OrderSummary = () => {
                   datas.map(hit => {
                     return (
                       <Text key={hit.mealid} style={{color: 'black'}}>
-                      {hit.meal_name} ({hit.Quatity} X {hit.meal_price} )
-                       
+                        {hit.meal_name} ({hit.Quatity} X {hit.meal_price} )
                       </Text>
                     );
                   })
@@ -146,7 +189,6 @@ const OrderSummary = () => {
             <Text style={{color: 'black'}}>{route.params.remark}</Text>
           </View>
 
-
           <View style={{marginHorizontal: 5, marginTop: 10}}>
             <Text style={{color: '#4AABE7', fontSize: 15, fontWeight: 'bold'}}>
               {route.params.paymentMethod}
@@ -162,11 +204,33 @@ const OrderSummary = () => {
               marginTop: 15,
             }}></View>
 
-          <View style={{alignSelf: 'center', marginTop: 20}}>
-            <TouchableOpacity>
-              <Text style={styles.button2}>Pay Now</Text>
-            </TouchableOpacity>
-          </View>
+          {route.params.paymentMethod === 'Pay Online' ? (
+            <>
+              <View style={{alignSelf: 'center', marginTop: 20}}>
+                <TouchableOpacity>
+                  <Text style={styles.button2}>Pay Online</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : (
+            <>
+              {isLoading ? (
+                <View style={{alignSelf: 'center', marginTop: 20}}>
+                  
+                    <Text style={styles.button2}><ActivityIndicator color="white" size="small" /></Text>
+                  
+                </View>
+              ) : (
+                <>
+                  <View style={{alignSelf: 'center', marginTop: 20}}>
+                    <TouchableOpacity onPress={handlePayOnline}>
+                      <Text style={styles.button2}>Pay Offline</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
+            </>
+          )}
         </View>
       </View>
     </View>
