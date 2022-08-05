@@ -108,7 +108,8 @@ const OrderSummary = () => {
                   datas.map(hit => {
                     return (
                       <Text key={hit.mealid} style={{color: 'black'}}>
-                        {hit.Quatity} X {hit.meal_name}
+                      {hit.meal_name} ({hit.Quatity} X {hit.meal_price} )
+                       
                       </Text>
                     );
                   })
