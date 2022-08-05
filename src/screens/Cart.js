@@ -34,7 +34,7 @@ const Cart = () => {
   const getCartData = async () => {
     console.log('this is called');
     const userId = await AsyncStorage.getItem('ActiveUserId');
-    // console.log(userId);
+ 
 
     try {
       axios
@@ -198,7 +198,7 @@ const Cart = () => {
                 let curPrice = Number(hit.Quatity);
 
                 return (
-                  <View key={hit.id} style={{flexDirection: 'row'}}>
+                  <View key={hit.mealid} style={{flexDirection: 'row'}}>
                     <View
                       style={{
                         marginLeft: 15,
@@ -310,7 +310,7 @@ const Cart = () => {
 
           <TouchableOpacity
             style={{marginVertical: 20}}
-            onPress={() => navigation.navigate('BillingAndPayment')}>
+            onPress={() => navigation.navigate('BillingAndPayment',{totalPayment:latPrice})}>
             <Text
               style={{
                 backgroundColor: '#F8774A',

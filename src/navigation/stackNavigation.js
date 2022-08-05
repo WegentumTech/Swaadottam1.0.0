@@ -23,6 +23,7 @@ import Preferences from '../screens/ProfileSubscreens/Preferences';
 import Menu from '../screens/Menu';
 import OrderStatus from '../screens/ProfileSubscreens/OrderStatus';
 import Starter from '../screens/Starter';
+import OrderSummary from '../screens/OrderSummary';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,7 @@ function StackNavigation() {
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="OrderStatus" component={OrderStatus} />
       <Stack.Screen name="Starter" component={Starter} />
+      <Stack.Screen name="OrderSummary" component={OrderSummary} />
     </Stack.Navigator>
   );
 }

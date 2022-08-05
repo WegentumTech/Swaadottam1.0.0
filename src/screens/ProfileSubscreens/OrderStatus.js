@@ -1,13 +1,13 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity,TextInput} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import PressBackWithTitle from '../../components/Reusable/PressBackWithTitle';
 import styles from '../../styles/globalStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import StepIndicator from 'react-native-step-indicator';
-import {TextInput} from 'react-native-gesture-handler';
 
 const OrderStatus = () => {
   const [currentPosition, setCurrentPosition] = useState(3);
+
 
   const labels = ['Registered', 'Cooking', 'On The Way', 'Delivered'];
   const customStyles = {
