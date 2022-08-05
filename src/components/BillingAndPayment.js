@@ -103,6 +103,17 @@ const BillingAndPayment = () => {
           </View>
         </View>
 
+
+
+        
+
+
+
+
+
+
+
+
         <View style={{alignSelf: 'center', marginTop: 20}}>
             <TouchableOpacity>
           <Text style={styles.button2}>Submit</Text>
