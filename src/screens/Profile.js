@@ -1,7 +1,7 @@
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import styles from '../styles/globalStyles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
@@ -97,7 +97,9 @@ const Profile = () => {
         }}>
         <Image
           source={{
-            uri:  !userImage ? "https://cdn.wallpaperdirect.com/asset/img/product/157207/tiled/metropolitan-stories-plain-slate-grey-wallpaper-tiled-157207.jpg" :  SIMPLE_URL + userImage,
+            uri: !userImage
+              ? 'https://cdn.wallpaperdirect.com/asset/img/product/157207/tiled/metropolitan-stories-plain-slate-grey-wallpaper-tiled-157207.jpg'
+              : SIMPLE_URL + userImage,
           }}
           style={{
             width: 120,
@@ -116,11 +118,50 @@ const Profile = () => {
             color: 'black',
             fontWeight: 'bold',
           }}>
-          {!userFullName ? "Loading Your Name":userFullName}
+          {!userFullName ? 'Loading Your Name' : userFullName}
         </Text>
         <Text style={{textAlign: 'center', top: -35, color: 'black'}}>
-          +91{!userContactNumber ? ".........." :userContactNumber}
+          +91{!userContactNumber ? '..........' : userContactNumber}
         </Text>
+
+        <View style={{flexDirection: 'row'}}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#F5F5F8',
+              marginHorizontal: 30,
+              borderRadius: 20,
+            }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+              <View style={{alignSelf: 'center', padding: 15}}>
+                <FontAwesome5
+                  name="shopping-cart"
+                  size={20}
+                  color="#434343"
+                  style={{alignSelf: 'flex-end'}}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#F5F5F8',
+              marginHorizontal: 30,
+              borderRadius: 20,
+            }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
+              <View style={{alignSelf: 'center', padding: 15}}>
+                <AntDesign
+                  name="heart"
+                  size={20}
+                  color="#434343"
+                  style={{alignSelf: 'flex-end'}}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <View>
           <TouchableOpacity
@@ -187,21 +228,6 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Wishlist')}
-            style={styles.profileModules}>
-            <Text style={{color: 'black', flex: 1, fontWeight: 'bold'}}>
-              Wishlist
-            </Text>
-            <View style={{marginTop: 1, flex: 1}}>
-              <AntDesign
-                name="right"
-                size={18}
-                color="black"
-                style={{alignSelf: 'flex-end'}}
-              />
-            </View>
-          </TouchableOpacity>
         </View>
 
         <View style={{alignSelf: 'center', marginTop: 50, marginBottom: 50}}>

@@ -29,56 +29,62 @@ const SingleMealScreen = () => {
   const route = useRoute();
 
   useEffect(() => {
-    try {
-      axios
-        .post(
-          BACKEND_URL + 'product',
-          {
-            productid: route.params.MealId,
-          },
-          {
-            headers: {
-              authkey: AuthKey,
-              secretkey: AuthPassword,
-            },
-          },
-        )
-        .then(acc => {
-          // console.log(acc.data);
-          setDatas(acc.data);
+    const GetUserDetails = async () => {
+      const userIds = await AsyncStorage.getItem('ActiveUserId');
 
-          try {
-            axios
-              .post(
-                BACKEND_URL + 'iswhishlist',
-                {
-                  userid: '3',
-                  product_id: route.params.MealId,
-                },
-                {
-                  headers: {
-                    authkey: AuthKey,
-                    secretkey: AuthPassword,
+      try {
+        axios
+          .post(
+            BACKEND_URL + 'product',
+            {
+              productid: route.params.MealId,
+            },
+            {
+              headers: {
+                authkey: AuthKey,
+                secretkey: AuthPassword,
+              },
+            },
+          )
+          .then(acc => {
+            // console.log(acc.data);
+            setDatas(acc.data);
+
+            try {
+              axios
+                .post(
+                  BACKEND_URL + 'iswhishlist',
+                  {
+                    userid: userIds,
+                    product_id: route.params.MealId,
                   },
-                },
-              )
-              .then(acc => {
-                console.log(acc.data);
-                setInWishlist(acc.data.status);
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          } catch (error) {
-            console.log(error);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+                  {
+                    headers: {
+                      authkey: AuthKey,
+                      secretkey: AuthPassword,
+                    },
+                  },
+                )
+                .then(acc => {
+                  console.log(acc.data);
+                  setInWishlist(acc.data.status);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            } catch (error) {
+              console.log(error);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    GetUserDetails();
   }, []);
 
   const handleAddToCart = async (
@@ -148,15 +154,16 @@ const SingleMealScreen = () => {
     }
   };
 
-  const addToWishlist = () => {
+  const addToWishlist = async () => {
     console.log('add to wishlist');
+    const userIds = await AsyncStorage.getItem('ActiveUserId');
 
     try {
       axios
         .post(
           BACKEND_URL + 'addwhishlist',
           {
-            userid: '3',
+            userid: userIds,
             product_id: route.params.MealId,
           },
           {
@@ -178,15 +185,17 @@ const SingleMealScreen = () => {
     }
   };
 
-  const removeFromWishlist = () => {
-    console.log('remove from wishlist');
+  const removeFromWishlist = async () => {
+    const userIds = await AsyncStorage.getItem('ActiveUserId');
 
+    console.log('remove from wishlist');
+        
     try {
       axios
         .post(
           BACKEND_URL + 'delwhishlist',
           {
-            userid: '3',
+            userid: userIds,
             product_id: route.params.MealId,
           },
           {

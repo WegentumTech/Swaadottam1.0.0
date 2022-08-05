@@ -10,35 +10,43 @@ import {AuthKey} from '../../helper/baseUrl';
 import {AuthPassword} from '../../helper/baseUrl';
 import {BACKEND_URL} from '../../helper/baseUrl';
 import {SIMPLE_URL} from '../../helper/baseUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Wishlist = () => {
   const navigation = useNavigation();
   const [datas, setDatas] = useState('');
 
   useEffect(() => {
-    try {
-      axios
-        .post(
-          BACKEND_URL + 'getwhishlist',
-          {
-            userid: '3',
-          },
-          {
-            headers: {
-              authkey: AuthKey,
-              secretkey: AuthPassword,
+    const UserDetails = async () => {
+      const userIds = await AsyncStorage.getItem('ActiveUserId');
+
+      try {
+        axios
+          .post(
+            BACKEND_URL + 'getwhishlist',
+            {
+              userid: userIds,
             },
-          },
-        )
-        .then(acc => {
-          console.log(acc.data);
-          setDatas(acc.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+            {
+              headers: {
+                authkey: AuthKey,
+                secretkey: AuthPassword,
+              },
+            },
+          )
+          .then(acc => {
+            console.log(acc.data);
+            setDatas(acc.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    UserDetails();
   }, []);
 
   return (
