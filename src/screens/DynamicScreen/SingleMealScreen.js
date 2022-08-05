@@ -24,9 +24,9 @@ const SingleMealScreen = () => {
   const navigation = useNavigation();
   const [number, setNumber] = useState(1);
   const [datas, setDatas] = useState('');
+  const [inWishlist, setInWishlist] = useState(null);
 
   const route = useRoute();
-
 
   useEffect(() => {
     try {
@@ -44,8 +44,34 @@ const SingleMealScreen = () => {
           },
         )
         .then(acc => {
-          console.log(acc.data);
+          // console.log(acc.data);
           setDatas(acc.data);
+
+          try {
+            axios
+              .post(
+                BACKEND_URL + 'iswhishlist',
+                {
+                  userid: '3',
+                  product_id: route.params.MealId,
+                },
+                {
+                  headers: {
+                    authkey: AuthKey,
+                    secretkey: AuthPassword,
+                  },
+                },
+              )
+              .then(acc => {
+                console.log(acc.data);
+                setInWishlist(acc.data.status);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } catch (error) {
+            console.log(error);
+          }
         })
         .catch(err => {
           console.log(err);
@@ -65,17 +91,15 @@ const SingleMealScreen = () => {
   ) => {
     const userId = await AsyncStorage.getItem('ActiveUserId');
     // console.log(userId);
-    console.log(id)
+    console.log(id);
 
-
-    const CheckIfMealInCart = () =>{
-
+    const CheckIfMealInCart = () => {
       try {
         axios
           .post(
             BACKEND_URL + 'getcart',
             {
-              userid:userId,
+              userid: userId,
             },
             {
               headers: {
@@ -93,25 +117,8 @@ const SingleMealScreen = () => {
       } catch (error) {
         console.log(error);
       }
-    }
-    CheckIfMealInCart()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    };
+    CheckIfMealInCart();
 
     try {
       axios
@@ -139,6 +146,68 @@ const SingleMealScreen = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const addToWishlist = () => {
+    console.log('add to wishlist');
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'addwhishlist',
+          {
+            userid: '3',
+            product_id: route.params.MealId,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          setInWishlist(true);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromWishlist = () => {
+    console.log('remove from wishlist');
+
+    try {
+      axios
+        .post(
+          BACKEND_URL + 'delwhishlist',
+          {
+            userid: '3',
+            product_id: route.params.MealId,
+          },
+          {
+            headers: {
+              authkey: AuthKey,
+              secretkey: AuthPassword,
+            },
+          },
+        )
+        .then(acc => {
+          console.log(acc.data);
+          setInWishlist(false);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // setInWishlist(false)
   };
 
   return (
@@ -179,6 +248,52 @@ const SingleMealScreen = () => {
           <Text style={{color: '#4A4A4A', fontSize: 16}}>
             ₹ {datas.meal_price}
           </Text>
+
+          {inWishlist !== null ? (
+            !inWishlist ? (
+              <>
+                <TouchableOpacity
+                  onPress={addToWishlist}
+                  style={{
+                    position: 'absolute',
+                    right: -110,
+                    top: 10,
+                    backgroundColor: 'white',
+                    padding: 8,
+                    borderRadius: 100,
+                    borderColor: '#FE7B5F',
+                    borderWidth: 3,
+                    borderStyle: 'solid',
+                  }}>
+                  <View>
+                    <AntDesign name="hearto" size={20} color="#FE7B5F" />
+                  </View>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <TouchableOpacity
+                  onPress={removeFromWishlist}
+                  style={{
+                    position: 'absolute',
+                    right: -110,
+                    top: 10,
+                    backgroundColor: 'white',
+                    padding: 8,
+                    borderRadius: 100,
+                    borderColor: '#FE7B5F',
+                    borderWidth: 3,
+                    borderStyle: 'solid',
+                  }}>
+                  <View>
+                    <AntDesign name="heart" size={20} color="#FE7B5F" />
+                  </View>
+                </TouchableOpacity>
+              </>
+            )
+          ) : (
+            <></>
+          )}
         </View>
 
         <View style={{marginHorizontal: 10, marginTop: 10}}>
