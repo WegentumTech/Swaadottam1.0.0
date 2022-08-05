@@ -1,4 +1,11 @@
-import {View, Text, Image, TouchableOpacity, TextInput,ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import PressBackWithTitle from '../../components/Reusable/PressBackWithTitle';
 import styles from '../../styles/globalStyles';
@@ -30,6 +37,7 @@ const OrderStatus = () => {
           BACKEND_URL + 'order',
           {
             userid: userId,
+            orderid: '14',
           },
           {
             headers: {
@@ -41,10 +49,8 @@ const OrderStatus = () => {
         .then(acc => {
           console.log(acc.data);
           setDatas(acc.data);
-        
-          setCurrentPosition(Number(acc.data[0].order_status))
-          
 
+          setCurrentPosition(Number(acc.data[0].order_status));
         })
         .catch(err => {
           console.log(err);
@@ -79,147 +85,136 @@ const OrderStatus = () => {
     currentStepLabelColor: '#fe7013',
   };
 
-  
-
-
-
   return (
     <ScrollView>
       <PressBackWithTitle title="Order Status" />
-      {
-        datas ?
-
-      <View>
-        <View
-          style={{
-            borderColor: '#D9D9D9',
-            borderStyle: 'solid',
-            borderWidth: 1,
-            padding: 15,
-            marginHorizontal: 20,
-            borderRadius: 20,
-            marginTop: 15,
-            marginBottom: 15,
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <Image
-                style={{height: 100, width: 110, borderRadius: 20}}
-                source={{
-                  uri: 'https://media.istockphoto.com/photos/homemade-turkey-thanksgiving-dinner-picture-id450705255?k=20&m=450705255&s=612x612&w=0&h=ZAi9vqhzYMCS4rbJRwy41MkVQdGC9AFUHVUE2qBuiY4=',
-                }}
-              />
-            </View>
-            <View style={{flex: 1}}>
-              <Text style={{fontSize: 20, color: 'black', textAlign: 'center'}}>
-               {datas[0].order_for_name}
-              </Text>
-              <Text style={{marginLeft: 10, color: 'black'}}>
-              {datas[0].address}
-              </Text>
-            </View>
-            <View style={{flex: 1}}>
-              <Text style={{color: 'green', textAlign: 'right', fontSize: 20}}>
-                ₹ {datas[0].payment}
-              </Text>
-            </View>
-          </View>
-
+      {datas ? (
+        <View>
           <View
             style={{
-              backgroundColor: '#D9D9D9',
-              padding: 1,
-              marginHorizontal: 5,
+              borderColor: '#D9D9D9',
+              borderStyle: 'solid',
+              borderWidth: 1,
+              padding: 15,
+              marginHorizontal: 20,
+              borderRadius: 20,
               marginTop: 15,
-            }}></View>
-
-          <View style={{marginHorizontal: 5, marginTop: 10}}>
-            <Text style={{color: '#625F5F', fontSize: 15}}>ITEMS</Text>
-
-
-
-            {
-              datas.map((hit)=>{
-                return  <Text key={hit.id} style={{color: 'black'}}>{hit.quantity} X Pav Bhaji with Gravy</Text>
-              })
-            }
-
-
-
-
-           
-            <Text style={{color: '#625F5F', fontSize: 15, marginTop: 10}}>
-              ORDERED ON
-            </Text>
-            <Text style={{color: 'black'}}>{datas[0].created_at}</Text>
-          </View>
-
-          <View
-            style={{
-              backgroundColor: '#D9D9D9',
-              padding: 1,
-              marginHorizontal: 5,
-              marginTop: 15,
-            }}></View>
-
-          <View style={{marginTop: 30}}>
-            <Text
-              style={{
-                color: 'black',
-                marginBottom: 15,
-                marginLeft: 10,
-                fontSize: 18,
-              }}>
-              Current Status
-            </Text>
-            <StepIndicator
-              stepCount={4}
-              customStyles={customStyles}
-              currentPosition={currentPosition}
-              labels={labels}
-            />
-          </View>
-
-          <View>
-            <Text
-              style={{
-                marginLeft: 10,
-                color: 'black',
-                fontSize: 18,
-                marginTop: 30,
-              }}>
-              Post Your Review
-            </Text>
-
-            <TextInput
-              multiline={true}
-              numberOfLines={4}
-              style={styles.inputReview}
-            />
-            <View style={{flexDirection: 'row', marginLeft: 20, marginTop: 10}}>
-              <AntDesign name="star" size={18} color="#FF4D00" />
-              <AntDesign name="star" size={18} color="#FF4D00" />
-              <AntDesign name="star" size={18} color="#FF4D00" />
-              <AntDesign name="star" size={18} color="#FF4D00" />
-              <AntDesign name="staro" size={18} color="#FF4D00" />
+              marginBottom: 15,
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{flex: 1}}>
+                <Image
+                  style={{height: 100, width: 110, borderRadius: 20}}
+                  source={{
+                    uri: 'https://media.istockphoto.com/photos/homemade-turkey-thanksgiving-dinner-picture-id450705255?k=20&m=450705255&s=612x612&w=0&h=ZAi9vqhzYMCS4rbJRwy41MkVQdGC9AFUHVUE2qBuiY4=',
+                  }}
+                />
+              </View>
+              <View style={{flex: 1}}>
+                <Text
+                  style={{fontSize: 20, color: 'black', textAlign: 'center'}}>
+                  {datas[0].order_for_name}
+                </Text>
+                <Text style={{marginLeft: 10, color: 'black'}}>
+                  {datas[0].address}
+                </Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text
+                  style={{color: 'green', textAlign: 'right', fontSize: 20}}>
+                  ₹ {datas[0].payment}
+                </Text>
+              </View>
             </View>
 
             <View
-              style={{alignSelf: 'center', marginTop: 35, marginBottom: 35}}>
-              <TouchableOpacity>
-                <Text style={styles.button2}>Submit</Text>
-              </TouchableOpacity>
+              style={{
+                backgroundColor: '#D9D9D9',
+                padding: 1,
+                marginHorizontal: 5,
+                marginTop: 15,
+              }}></View>
+
+            <View style={{marginHorizontal: 5, marginTop: 10}}>
+              <Text style={{color: '#625F5F', fontSize: 15}}>ITEMS</Text>
+
+              {datas.map(hit => {
+                return (
+                  <Text key={hit.id} style={{color: 'black'}}>
+                    {hit.quantity} X Pav Bhaji with Gravy
+                  </Text>
+                );
+              })}
+
+              <Text style={{color: '#625F5F', fontSize: 15, marginTop: 10}}>
+                ORDERED ON
+              </Text>
+              <Text style={{color: 'black'}}>{datas[0].created_at}</Text>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: '#D9D9D9',
+                padding: 1,
+                marginHorizontal: 5,
+                marginTop: 15,
+              }}></View>
+
+            <View style={{marginTop: 30}}>
+              <Text
+                style={{
+                  color: 'black',
+                  marginBottom: 15,
+                  marginLeft: 10,
+                  fontSize: 18,
+                }}>
+                Current Status
+              </Text>
+              <StepIndicator
+                stepCount={4}
+                customStyles={customStyles}
+                currentPosition={currentPosition}
+                labels={labels}
+              />
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  color: 'black',
+                  fontSize: 18,
+                  marginTop: 30,
+                }}>
+                Post Your Review
+              </Text>
+
+              <TextInput
+                multiline={true}
+                numberOfLines={4}
+                style={styles.inputReview}
+              />
+              <View
+                style={{flexDirection: 'row', marginLeft: 20, marginTop: 10}}>
+                <AntDesign name="star" size={18} color="#FF4D00" />
+                <AntDesign name="star" size={18} color="#FF4D00" />
+                <AntDesign name="star" size={18} color="#FF4D00" />
+                <AntDesign name="star" size={18} color="#FF4D00" />
+                <AntDesign name="staro" size={18} color="#FF4D00" />
+              </View>
+
+              <View
+                style={{alignSelf: 'center', marginTop: 35, marginBottom: 35}}>
+                <TouchableOpacity>
+                  <Text style={styles.button2}>Submit</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-
-        :
-
-
+      ) : (
         <></>
-      }
-
+      )}
     </ScrollView>
   );
 };
